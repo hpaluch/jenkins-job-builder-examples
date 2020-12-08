@@ -11,11 +11,13 @@ How it works:
 
 * it reads YAML template
 * it generate XML job definition - here it ends in `test` mode
-* it will call Jenkins API and create/update job on Target Jenkins
+* it will call Jenkins API and create/update job on Target
+  Jenkins - in `update` mode
 
 ## Setup
 
-Tested host OS: `Debian 10`
+* Tested host OS: `Debian 10`
+* Tested Jenkins: `2.257`
 
 Requirements:
 
