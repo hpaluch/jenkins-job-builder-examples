@@ -5,6 +5,9 @@
     name: 'clockres-branches-builds'
     jobs:
       - 'clockres-build-{safename}-jjb'
+    # NOTE: Top level variable (safename) must be one that is
+    #       used in above "jobs:" name definition. Nested variable
+    #       (branch) is additionally passed to job-template:
     safename:
       - master:
           branch: master
@@ -35,6 +38,8 @@
           basedir: 'clockres-{safename}'
 
     builders:
+      # NOTE: curly braces must be *sometimes* doubled
+      #       see https://jenkins-job-builder.readthedocs.io/en/latest/definition.html#macro-notes
       - shell: |
           cd clockres-{safename}
           make clean all
