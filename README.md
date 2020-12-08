@@ -24,11 +24,33 @@ To install _Jenkins Job Builder_ on Debian 10 do this:
 
 ```bash
 sudo apt-get install python3-jenkins-job-builder \
-   jenkins-job-builder-doc jenkins-job-builder
+   jenkins-job-builder-doc jenkins-job-builder git
 ```
 
-TODO ...
+Now copy initial configuration example to its target directory:
 
+```bash
+mkdir -p ~/.config/jenkins_jobs/
+cp /usr/share/doc/jenkins-job-builder/examples/jenkins_jobs.ini-sample \
+   ~/.config/jenkins_jobs/jenkins_jobs.ini
+  507  vim ~/.config/jenkins_jobs/jenkins_jobs.ini
+```
+Now you need to edit in `~/.config/jenkins_jobs/jenkins_jobs.ini` at least:
+- `user=` - your Jenkins User
+- `password=` - your Jenkins **API Token**
+- `url=` - your Jenkins base URL
+
+And finally (and obviously) checkout this project:
+
+```bash
+mkdir -p ~/projects
+cd ~/projects
+git clone https://github.com/hpaluch/jenkins-job-builder-examples.git
+cd jenkins-job-builder-examples
+```
+## Deploying first example
+
+TODO:
 
 [jjb-docs]: https://jenkins-job-builder.readthedocs.io/en/latest/
 [jjb-git]: https://opendev.org/jjb/jenkins-job-builder
