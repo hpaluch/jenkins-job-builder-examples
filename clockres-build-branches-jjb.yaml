@@ -1,0 +1,49 @@
+# clockres-build-jjb.yaml - Template that creates SCM + Build + Artifact
+#                           for several project branches
+---
+- project:
+    name: 'clockres-branches-builds'
+    jobs:
+      - 'clockres-build-{safename}-jjb'
+    safename:
+      - master:
+          branch: master
+      - debs_master:
+          branch: debs/master
+      - rpms_master:
+          branch: rpms/master
+
+- job-template:
+    name: 'clockres-build-{safename}-jjb'
+    id: 'clockres-build-{safename}-jjb'
+    description: >-
+      Sample job that checkouts clockres app from GitHub, branch {branch},
+      builds it and packs binary as artifact
+    project-type: freestyle
+    # restrict job to run on specified node (label) only
+    # node: unix
+    logrotate:
+      numToKeep: 3
+
+    scm:
+      - git:
+          url: https://github.com/hpaluch-pil/clockres.git
+          branches:
+            - '{branch}'
+          clean:
+            before: true
+          basedir: 'clockres-{safename}'
+
+    builders:
+      - shell: |
+          cd clockres-{safename}
+          make clean all
+          file clockres | fgrep ELF || {{
+             echo "clockres is not ELF executable" >&2
+             exit 1
+          }}
+
+    publishers:
+      - archive:
+          artifacts: "clockres-{safename}/clockres"
+          only-if-success: true

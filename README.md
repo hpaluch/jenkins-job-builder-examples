@@ -22,7 +22,9 @@ How it works:
 Requirements:
 
 * you must have installed, configured and running _Jenkins CI_ somewhere
-* you need to generate API Token on Jenkins UI for user with enough privileges.
+* you need to have Jenkins user with appropriate permissions as
+  described on [JJB Configuration - Jenkins Section][jjb-conf].
+* you need to generate API Token on Jenkins UI for above user
 
 To install _Jenkins Job Builder_ on Debian 10 do this:
 
@@ -87,13 +89,34 @@ can run it.
 
 TODO: How to remove comment in Job description
 
-## Job list
+## Example jobs
+
+There are two job categories:
+
+* simple jobs - no variable substitution, straight job definition
+  with `job` key.
+* template jobs:
+  - job is defined as `job-template`, using `{varname}` for substitutions
+  - template is called from  `project`. Project contains variable
+    definitions (including possible permutations) and it calls template
+    for each permutation (thus one project may generate more than one job)
+
+Here is list of simple jobs:
 
 * `hello-jjb.yaml` - introductory example - just prints message on standard output
 * `clockres-build-jjb.yaml` - example that does GitHub checkout, builds and
   archives binary executable
 
+And list of templated jobs:
+
+* `clockres-build-branches-jjb.yaml` - it will create 3 jobs, each
+  will checkout, build and archive binary from specific branch (there
+  are 3 branches: `master`, `debs/master`, `rpms/master`).
+
+
+
 [jjb-docs]: https://jenkins-job-builder.readthedocs.io/en/latest/
 [jjb-git]: https://opendev.org/jjb/jenkins-job-builder
+[jjb-conf]: https://jenkins-job-builder.readthedocs.io/en/latest/execution.html#jenkins-section
 [monty-wiki]: https://en.wikipedia.org/wiki/Monty_Taylor#OpenStack
 [openstack]: https://www.openstack.org/
