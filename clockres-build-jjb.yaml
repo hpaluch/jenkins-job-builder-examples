@@ -1,0 +1,40 @@
+# clockres-build-jjb.yaml - Example jobs that checkouts application from GitHub,
+#                           builds it and creates artifact containing binary...
+---
+- scm:
+    name: git-scm
+    scm:
+      - git:
+          url: https://github.com/hpaluch-pil/clockres.git
+          branches:
+            - master
+          clean:
+            before: true
+          basedir: clockres
+
+- job:
+    name: clockres-build-jjb
+    description: >-
+      Sample job that checkouts clockres app from GitHub, builds it and packs
+      binary as artifact
+    project-type: freestyle
+    # restrict job to run on specified node (label) only
+    # node: unix
+    logrotate:
+      numToKeep: 3
+    scm:
+      - git-scm
+
+    builders:
+      - shell: |
+          cd clockres
+          make clean all
+          file clockres | fgrep ELF || {
+             echo "clockres is not ELF executable" >&2
+             exit 1
+          }
+
+    publishers:
+      - archive:
+          artifacts: "clockres/clockres"
+          only-if-success: true

@@ -37,7 +37,6 @@ Now copy initial configuration example to its target directory:
 mkdir -p ~/.config/jenkins_jobs/
 cp /usr/share/doc/jenkins-job-builder/examples/jenkins_jobs.ini-sample \
    ~/.config/jenkins_jobs/jenkins_jobs.ini
-  507  vim ~/.config/jenkins_jobs/jenkins_jobs.ini
 ```
 
 Now you need to edit in `~/.config/jenkins_jobs/jenkins_jobs.ini` at least
@@ -87,6 +86,12 @@ can run it.
 > Unix (including Linux)
 
 TODO: How to remove comment in Job description
+
+## Job list
+
+* `hello-jjb.yaml` - introductory example - just prints message on standard output
+* `clockres-build-jjb.yaml` - example that does GitHub checkout, builds and
+  archives binary executable
 
 [jjb-docs]: https://jenkins-job-builder.readthedocs.io/en/latest/
 [jjb-git]: https://opendev.org/jjb/jenkins-job-builder
